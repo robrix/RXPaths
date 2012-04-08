@@ -1,0 +1,247 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D470F25F1531DD4200FD409C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470F25E1531DD4200FD409C /* Cocoa.framework */; };
+		D470F2691531DD4200FD409C /* RXPaths.m in Sources */ = {isa = PBXBuildFile; fileRef = D470F2681531DD4200FD409C /* RXPaths.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D470F25B1531DD4200FD409C /* libRXPaths.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXPaths.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D470F25E1531DD4200FD409C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D470F2611531DD4200FD409C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D470F2621531DD4200FD409C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D470F2631531DD4200FD409C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D470F2661531DD4200FD409C /* RXPaths-Prefix.pch */ = {isa = PBXFileReference; path = "RXPaths-Prefix.pch"; sourceTree = "<group>"; };
+		D470F2671531DD4200FD409C /* RXPaths.h */ = {isa = PBXFileReference; path = RXPaths.h; sourceTree = "<group>"; };
+		D470F2681531DD4200FD409C /* RXPaths.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RXPaths.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D470F2581531DD4200FD409C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D470F25F1531DD4200FD409C /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D470F2501531DD4200FD409C = {
+			isa = PBXGroup;
+			children = (
+				D470F2641531DD4200FD409C /* RXPaths */,
+				D470F25D1531DD4200FD409C /* Frameworks */,
+				D470F25C1531DD4200FD409C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D470F25C1531DD4200FD409C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D470F25B1531DD4200FD409C /* libRXPaths.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D470F25D1531DD4200FD409C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D470F25E1531DD4200FD409C /* Cocoa.framework */,
+				D470F2601531DD4200FD409C /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D470F2601531DD4200FD409C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D470F2611531DD4200FD409C /* AppKit.framework */,
+				D470F2621531DD4200FD409C /* CoreData.framework */,
+				D470F2631531DD4200FD409C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D470F2641531DD4200FD409C /* RXPaths */ = {
+			isa = PBXGroup;
+			children = (
+				D470F2671531DD4200FD409C /* RXPaths.h */,
+				D470F2681531DD4200FD409C /* RXPaths.m */,
+				D470F2651531DD4200FD409C /* Supporting Files */,
+			);
+			path = RXPaths;
+			sourceTree = "<group>";
+		};
+		D470F2651531DD4200FD409C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D470F2661531DD4200FD409C /* RXPaths-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D470F2591531DD4200FD409C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D470F25A1531DD4200FD409C /* RXPaths */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D470F26C1531DD4200FD409C /* Build configuration list for PBXNativeTarget "RXPaths" */;
+			buildPhases = (
+				D470F2571531DD4200FD409C /* Sources */,
+				D470F2581531DD4200FD409C /* Frameworks */,
+				D470F2591531DD4200FD409C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RXPaths;
+			productName = RXPaths;
+			productReference = D470F25B1531DD4200FD409C /* libRXPaths.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D470F2521531DD4200FD409C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Black Pixel";
+			};
+			buildConfigurationList = D470F2551531DD4200FD409C /* Build configuration list for PBXProject "RXPaths" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D470F2501531DD4200FD409C;
+			productRefGroup = D470F25C1531DD4200FD409C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D470F25A1531DD4200FD409C /* RXPaths */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D470F2571531DD4200FD409C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D470F2691531DD4200FD409C /* RXPaths.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D470F26A1531DD4200FD409C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D470F26B1531DD4200FD409C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D470F26D1531DD4200FD409C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXPaths/RXPaths-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D470F26E1531DD4200FD409C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RXPaths/RXPaths-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D470F2551531DD4200FD409C /* Build configuration list for PBXProject "RXPaths" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D470F26A1531DD4200FD409C /* Debug */,
+				D470F26B1531DD4200FD409C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D470F26C1531DD4200FD409C /* Build configuration list for PBXNativeTarget "RXPaths" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D470F26D1531DD4200FD409C /* Debug */,
+				D470F26E1531DD4200FD409C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D470F2521531DD4200FD409C /* Project object */;
+}
