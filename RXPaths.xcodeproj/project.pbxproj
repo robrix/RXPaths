@@ -13,6 +13,8 @@
 		D470F29B1531DF3E00FD409C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D470F25E1531DD4200FD409C /* Cocoa.framework */; };
 		D470F2A11531DF3E00FD409C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D470F29F1531DF3E00FD409C /* InfoPlist.strings */; };
 		D470F2AA1531DF9500FD409C /* RXCGPathSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D470F2A91531DF9500FD409C /* RXCGPathSerializationTests.m */; };
+		D470F2C41531E06C00FD409C /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D470F2B21531E06B00FD409C /* RXAssertions.m */; };
+		D470F2D01531E2DA00FD409C /* libRXCGPaths.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D470F2731531DD8A00FD409C /* libRXCGPaths.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +33,8 @@
 		D470F2A01531DF3E00FD409C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D470F2A51531DF3E00FD409C /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		D470F2A91531DF9500FD409C /* RXCGPathSerializationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCGPathSerializationTests.m; sourceTree = "<group>"; };
+		D470F2B11531E06B00FD409C /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
+		D470F2B21531E06B00FD409C /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D470F2D01531E2DA00FD409C /* libRXCGPaths.a in Frameworks */,
 				D470F29A1531DF3E00FD409C /* SenTestingKit.framework in Frameworks */,
 				D470F29B1531DF3E00FD409C /* Cocoa.framework in Frameworks */,
 			);
@@ -57,10 +62,10 @@
 		D470F2501531DD4200FD409C = {
 			isa = PBXGroup;
 			children = (
-				D470F2AB1531DFA100FD409C /* External */,
 				D470F2641531DD4200FD409C /* RXPaths */,
 				D470F2751531DD8A00FD409C /* RXCGPaths */,
 				D470F29C1531DF3E00FD409C /* Tests */,
+				D470F2AB1531DFA100FD409C /* External */,
 				D470F25D1531DD4200FD409C /* Frameworks */,
 				D470F25C1531DD4200FD409C /* Products */,
 			);
@@ -151,8 +156,18 @@
 		D470F2AB1531DFA100FD409C /* External */ = {
 			isa = PBXGroup;
 			children = (
+				D470F2AC1531E06B00FD409C /* RXAssertions */,
 			);
 			path = External;
+			sourceTree = "<group>";
+		};
+		D470F2AC1531E06B00FD409C /* RXAssertions */ = {
+			isa = PBXGroup;
+			children = (
+				D470F2B11531E06B00FD409C /* RXAssertions.h */,
+				D470F2B21531E06B00FD409C /* RXAssertions.m */,
+			);
+			path = RXAssertions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D470F2AA1531DF9500FD409C /* RXCGPathSerializationTests.m in Sources */,
+				D470F2C41531E06C00FD409C /* RXAssertions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
