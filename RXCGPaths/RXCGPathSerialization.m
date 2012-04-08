@@ -3,20 +3,12 @@
 //  Copyright (c) 2012 Monochrome Industries. All rights reserved.
 
 #import "RXCGPathSerialization.h"
+#import "RXPathSerialization.h"
 
 NSString * const RXCGPathSerializationErrorDomain = @"RXCGPathSerializationErrorDomain";
 NSString * const RXCGPathSerializationIndexErrorKey = @"RXCGPathSerializationIndexErrorKey";
 
-typedef void (*RXCGPathSerializeElementFunction)(NSMutableData *data, const CGPathElement *element);
-
-enum {
-	RXCGPathMoveElementType = 'M',
-	RXCGPathLineElementType = 'L',
-	RXCGPathQuadraticCurveElementType = 'Q',
-	RXCGPathCubicCurveElementType = 'C',
-	RXCGPathCloseElementType = 'Z',
-};
-typedef const char RXCGPathElementType;
+typedef void (*RXCGPathSerializeElementFunction)(RXPathSerializer *serializer, const CGPathElement *element);
 
 
 @interface RXCGPathDeserializationState : NSObject
@@ -39,46 +31,28 @@ typedef const char RXCGPathElementType;
 
 #pragma mark Serialization
 
-static void RXCGPathSerializePoint(NSMutableData *data, CGPoint point) {
-	const char format[100];
-	snprintf((char *)format, sizeof(format), "%.8g %.8g", point.x, point.y);
-	
-	[data appendBytes:format length:strlen(format)];
+static void RXCGPathSerializeMoveElement(RXPathSerializer *serializer, const CGPathElement *element) {
+	[serializer serializeMoveToPoint:element->points[0]];
 }
 
-
-static void RXCGPathSerializeMoveElement(NSMutableData *data, const CGPathElement *element) {
-	[data appendBytes:"M" length:1];
-	RXCGPathSerializePoint(data, element->points[0]);
+static void RXCGPathSerializeLineElement(RXPathSerializer *serializer, const CGPathElement *element) {
+	[serializer serializeLineToPoint:element->points[0]];
 }
 
-static void RXCGPathSerializeLineElement(NSMutableData *data, const CGPathElement *element) {
-	[data appendBytes:"L" length:1];
-	RXCGPathSerializePoint(data, element->points[0]);
+static void RXCGPathSerializeQuadraticCurveElement(RXPathSerializer *serializer, const CGPathElement *element) {
+	[serializer serializeQuadraticCurveToPoint:element->points[1] controlPoint:element->points[0]];
 }
 
-static void RXCGPathSerializeQuadraticCurveElement(NSMutableData *data, const CGPathElement *element) {
-	[data appendBytes:"Q" length:1];
-	RXCGPathSerializePoint(data, element->points[0]);
-	[data appendBytes:" " length:1];
-	RXCGPathSerializePoint(data, element->points[1]);
+static void RXCGPathSerializeCubicCurveElement(RXPathSerializer *serializer, const CGPathElement *element) {
+	[serializer serializeCubicCurveToPoint:element->points[2] controlPoint1:element->points[0] controlPoint2:element->points[1]];
 }
 
-static void RXCGPathSerializeCubicCurveElement(NSMutableData *data, const CGPathElement *element) {
-	[data appendBytes:"C" length:1];
-	RXCGPathSerializePoint(data, element->points[0]);
-	[data appendBytes:" " length:1];
-	RXCGPathSerializePoint(data, element->points[1]);
-	[data appendBytes:" " length:1];
-	RXCGPathSerializePoint(data, element->points[2]);
-}
-
-static void RXCGPathSerializeCloseElement(NSMutableData *data, const CGPathElement *element) {
-	[data appendBytes:"Z" length:1];
+static void RXCGPathSerializeCloseElement(RXPathSerializer *serializer, const CGPathElement *element) {
+	[serializer serializeCloseSubpath];
 }
 
 static void RXCGPathSerializeElement(void *info, const CGPathElement *element) {
-	NSMutableData *data = *(NSMutableData * __strong *)info;
+	RXPathSerializer *serializer = *(RXPathSerializer * __strong *)info;
 	
 	static RXCGPathSerializeElementFunction elementFunctions[] = {
 		RXCGPathSerializeMoveElement,
@@ -88,15 +62,16 @@ static void RXCGPathSerializeElement(void *info, const CGPathElement *element) {
 		RXCGPathSerializeCloseElement
 	};
 	
-	(elementFunctions[element->type])(data, element);
+	(elementFunctions[element->type])(serializer, element);
 }
 
 +(NSData *)dataWithPath:(CGPathRef)path error:(NSError * __autoreleasing *)error {
 	NSParameterAssert(path != NULL);
 	
 	NSMutableData *data = [NSMutableData new];
+	RXPathSerializer *serializer = [RXPathSerializer serializerWithMutableData:data];
 	
-	CGPathApply(path, &data, RXCGPathSerializeElement);
+	CGPathApply(path, &serializer, RXCGPathSerializeElement);
 	
 	return data;
 }
@@ -104,7 +79,7 @@ static void RXCGPathSerializeElement(void *info, const CGPathElement *element) {
 
 #pragma mark Deserialization
 
-static BOOL RXCGPathExpectType(RXCGPathDeserializationState *state, RXCGPathElementType type) {
+static BOOL RXCGPathExpectType(RXCGPathDeserializationState *state, RXPathElementType type) {
 	BOOL advanced = NO;
 	if((advanced = (*state.cursor == type))) {
 		state.cursor++;
@@ -136,7 +111,7 @@ static BOOL RXCGPathExpectPoint(RXCGPathDeserializationState *state, CGPoint *po
 static BOOL RXCGPathDeserializeMoveElement(CGMutablePathRef path, RXCGPathDeserializationState *state) {
 	CGPoint point = CGPointZero;
 	BOOL advanced =
-		RXCGPathExpectType(state, RXCGPathMoveElementType)
+		RXCGPathExpectType(state, RXPathMoveElementType)
 	&&	RXCGPathExpectPoint(state, &point);
 	if(advanced)
 		CGPathMoveToPoint(path, NULL, point.x, point.y);
@@ -146,7 +121,7 @@ static BOOL RXCGPathDeserializeMoveElement(CGMutablePathRef path, RXCGPathDeseri
 static BOOL RXCGPathDeserializeLineElement(CGMutablePathRef path, RXCGPathDeserializationState *state) {
 	CGPoint point = CGPointZero;
 	BOOL advanced =
-		RXCGPathExpectType(state, RXCGPathLineElementType)
+		RXCGPathExpectType(state, RXPathLineElementType)
 	&&	RXCGPathExpectPoint(state, &point);
 	if(advanced)
 		CGPathAddLineToPoint(path, NULL, point.x, point.y);
@@ -156,7 +131,7 @@ static BOOL RXCGPathDeserializeLineElement(CGMutablePathRef path, RXCGPathDeseri
 static BOOL RXCGPathDeserializeQuadraticCurveElement(CGMutablePathRef path, RXCGPathDeserializationState *state) {
 	CGPoint point1 = CGPointZero, point2 = CGPointZero;
 	BOOL advanced =
-		RXCGPathExpectType(state, RXCGPathQuadraticCurveElementType)
+		RXCGPathExpectType(state, RXPathQuadraticCurveElementType)
 	&&	RXCGPathExpectPoint(state, &point1)
 	&&	RXCGPathExpectPoint(state, &point2);
 	if(advanced)
@@ -167,7 +142,7 @@ static BOOL RXCGPathDeserializeQuadraticCurveElement(CGMutablePathRef path, RXCG
 static BOOL RXCGPathDeserializeCubicCurveElement(CGMutablePathRef path, RXCGPathDeserializationState *state) {
 	CGPoint point1 = CGPointZero, point2 = CGPointZero, point3 = CGPointZero;
 	BOOL advanced =
-		RXCGPathExpectType(state, RXCGPathCubicCurveElementType)
+		RXCGPathExpectType(state, RXPathCubicCurveElementType)
 	&&	RXCGPathExpectPoint(state, &point1)
 	&&	RXCGPathExpectPoint(state, &point2)
 	&&	RXCGPathExpectPoint(state, &point3);
@@ -177,7 +152,7 @@ static BOOL RXCGPathDeserializeCubicCurveElement(CGMutablePathRef path, RXCGPath
 }
 
 static BOOL RXCGPathDeserializeCloseElement(CGMutablePathRef path, RXCGPathDeserializationState *state) {
-	BOOL advanced = RXCGPathExpectType(state, RXCGPathCloseElementType);
+	BOOL advanced = RXCGPathExpectType(state, RXPathCloseElementType);
 	if(advanced)
 		CGPathCloseSubpath(path);
 	return advanced;

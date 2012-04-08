@@ -15,6 +15,8 @@
 		D470F2AA1531DF9500FD409C /* RXCGPathSerializationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D470F2A91531DF9500FD409C /* RXCGPathSerializationTests.m */; };
 		D470F2C41531E06C00FD409C /* RXAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = D470F2B21531E06B00FD409C /* RXAssertions.m */; };
 		D470F2D01531E2DA00FD409C /* libRXCGPaths.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D470F2731531DD8A00FD409C /* libRXCGPaths.a */; };
+		D470F2DE15323BEE00FD409C /* RXPathSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = D470F2DC15323BEE00FD409C /* RXPathSerialization.h */; };
+		D470F2DF15323BEE00FD409C /* RXPathSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = D470F2DD15323BEE00FD409C /* RXPathSerialization.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,7 +24,6 @@
 		D470F2611531DD4200FD409C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		D470F2621531DD4200FD409C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D470F2631531DD4200FD409C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D470F2661531DD4200FD409C /* RXPaths-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXPaths-Prefix.pch"; sourceTree = "<group>"; };
 		D470F2731531DD8A00FD409C /* libRXCGPaths.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRXCGPaths.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D470F2771531DD8B00FD409C /* RXCGPaths-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RXCGPaths-Prefix.pch"; sourceTree = "<group>"; };
 		D470F2781531DD8B00FD409C /* RXCGPathSerialization.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RXCGPathSerialization.h; sourceTree = "<group>"; };
@@ -35,6 +36,8 @@
 		D470F2A91531DF9500FD409C /* RXCGPathSerializationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXCGPathSerializationTests.m; sourceTree = "<group>"; };
 		D470F2B11531E06B00FD409C /* RXAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXAssertions.h; sourceTree = "<group>"; };
 		D470F2B21531E06B00FD409C /* RXAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXAssertions.m; sourceTree = "<group>"; };
+		D470F2DC15323BEE00FD409C /* RXPathSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RXPathSerialization.h; sourceTree = "<group>"; };
+		D470F2DD15323BEE00FD409C /* RXPathSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RXPathSerialization.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,17 +106,10 @@
 		D470F2641531DD4200FD409C /* RXPaths */ = {
 			isa = PBXGroup;
 			children = (
-				D470F2651531DD4200FD409C /* Supporting Files */,
+				D470F2DC15323BEE00FD409C /* RXPathSerialization.h */,
+				D470F2DD15323BEE00FD409C /* RXPathSerialization.m */,
 			);
 			path = RXPaths;
-			sourceTree = "<group>";
-		};
-		D470F2651531DD4200FD409C /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D470F2661531DD4200FD409C /* RXPaths-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D470F2751531DD8A00FD409C /* RXCGPaths */ = {
@@ -177,6 +173,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D470F2DE15323BEE00FD409C /* RXPathSerialization.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D470F27A1531DD8B00FD409C /* RXCGPathSerialization.m in Sources */,
+				D470F2DF15323BEE00FD409C /* RXPathSerialization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +410,7 @@
 				D470F27D1531DD8B00FD409C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D470F2A61531DF3F00FD409C /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +419,7 @@
 				D470F2A81531DF3F00FD409C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
