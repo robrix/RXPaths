@@ -4,12 +4,6 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const RXCGPathSerializationErrorDomain;
-extern NSString * const RXCGPathSerializationIndexErrorKey;
-enum {
-	RXCGPathSerializationInvalid = 1,
-};
-
 @interface RXCGPathSerialization : NSObject
 
 +(NSData *)dataWithPath:(CGPathRef)path error:(NSError * __autoreleasing *)error;

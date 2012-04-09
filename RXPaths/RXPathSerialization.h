@@ -13,11 +13,17 @@ enum {
 };
 typedef const char RXPathElementType;
 
+extern NSString * const RXPathSerializationErrorDomain;
+extern NSString * const RXPathSerializationIndexErrorKey;
+enum {
+	RXPathSerializationInvalidDataErrorCode = 1,
+};
+
 typedef void (^RXPathElementHandler)(RXPathElementType type, CGPoint *points);
 typedef void (^RXPathMoveBlock)(CGPoint point);
 typedef void (^RXPathLineBlock)(CGPoint point);
-typedef void (^RXPathQuadraticCurveBlock)(CGPoint point1, CGPoint point2);
-typedef void (^RXPathCubicCurveBlock)(CGPoint point1, CGPoint point2, CGPoint point3);
+typedef void (^RXPathQuadraticCurveBlock)(CGPoint controlPoint, CGPoint endPoint);
+typedef void (^RXPathCubicCurveBlock)(CGPoint controlPoint1, CGPoint controlPoint2, CGPoint endPoint);
 typedef void (^RXPathCloseBlock)();
 
 @interface RXPathSerializer : NSObject
@@ -34,16 +40,14 @@ typedef void (^RXPathCloseBlock)();
 
 @interface RXPathDeserializer : NSObject
 
-+(void)deserializePathWithData:(NSData *)data
-				   moveHandler:(RXPathMoveBlock)move
-				   lineHandler:(RXPathLineBlock)line
-		 quadraticCurveHandler:(RXPathQuadraticCurveBlock)quadratic
-			 cubicCurveHandler:(RXPathCubicCurveBlock)cubic
-				  closeHandler:(RXPathCloseBlock)close
-						 error:(NSError * __autoreleasing *)error;
++(RXPathDeserializer *)deserializerWithData:(NSData *)data;
 
-+(void)deserializePathWithData:(NSData *)data
-				elementHandler:(RXPathElementHandler)element
-						 error:(NSError * __autoreleasing *)error;
+@property (nonatomic, copy) RXPathMoveBlock moveHandler;
+@property (nonatomic, copy) RXPathLineBlock lineHandler;
+@property (nonatomic, copy) RXPathQuadraticCurveBlock quadraticCurveHandler;
+@property (nonatomic, copy) RXPathCubicCurveBlock cubicCurveHandler;
+@property (nonatomic, copy) RXPathCloseBlock closeHandler;
+
+-(BOOL)deserializeWithError:(NSError * __autoreleasing *)error;
 
 @end
