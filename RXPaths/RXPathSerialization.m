@@ -61,19 +61,19 @@ static void RXPathSerializePoint(NSMutableData *data, CGPoint point) {
 
 @implementation RXPathDeserializer {
 	NSData *data;
+	id<RXPathBuilder> builder;
 	const char *start;
 	const char *end;
 	const char *cursor;
 	NSError *error;
 }
 
-@synthesize moveHandler, lineHandler, quadraticCurveHandler, cubicCurveHandler, closeHandler;
-
-+(RXPathDeserializer *)deserializerWithData:(NSData *)data {
++(RXPathDeserializer *)deserializerWithData:(NSData *)data pathBuilder:(id<RXPathBuilder>)builder {
 	NSParameterAssert(data != nil);
 	
 	RXPathDeserializer *deserializer = [self new];
 	deserializer->data = data;
+	deserializer->builder = builder;
 	return deserializer;
 }
 
@@ -115,8 +115,8 @@ static BOOL RXPathDeserializeMoveElement(RXPathDeserializer *self) {
 	BOOL didAdvance =
 		RXPathDeserializerAcceptType(self, RXPathMoveElementType)
 	&&	RXPathDeserializerExpectPoint(self, &point);
-	if(didAdvance && self->moveHandler)
-		self->moveHandler(point);
+	if(didAdvance)
+		[self->builder moveToPoint:point];
 	return didAdvance;
 }
 
@@ -125,8 +125,8 @@ static BOOL RXPathDeserializeLineElement(RXPathDeserializer *self) {
 	BOOL didAdvance =
 		RXPathDeserializerAcceptType(self, RXPathLineElementType)
 	&&	RXPathDeserializerExpectPoint(self, &point);
-	if(didAdvance && self->lineHandler)
-		self->lineHandler(point);
+	if(didAdvance)
+		[self->builder addLineToPoint:point];
 	return didAdvance;
 }
 
@@ -136,8 +136,8 @@ static BOOL RXPathDeserializeQuadraticCurveElement(RXPathDeserializer *self) {
 		RXPathDeserializerAcceptType(self, RXPathQuadraticCurveElementType)
 	&&	RXPathDeserializerExpectPoint(self, &controlPoint)
 	&&	RXPathDeserializerExpectPoint(self, &point);
-	if(didAdvance && self->quadraticCurveHandler)
-		self->quadraticCurveHandler(controlPoint, point);
+	if(didAdvance)
+		[self->builder addQuadCurveToPoint:point controlPoint:controlPoint];
 	return didAdvance;
 }
 
@@ -148,15 +148,15 @@ static BOOL RXPathDeserializeCubicCurveElement(RXPathDeserializer *self) {
 	&&	RXPathDeserializerExpectPoint(self, &controlPoint1)
 	&&	RXPathDeserializerExpectPoint(self, &controlPoint2)
 	&&	RXPathDeserializerExpectPoint(self, &point);
-	if(didAdvance && self->cubicCurveHandler)
-		self->cubicCurveHandler(controlPoint1, controlPoint2, point);
+	if(didAdvance)
+		[self->builder addCurveToPoint:point controlPoint1:controlPoint1 controlPoint2:controlPoint2];
 	return didAdvance;
 }
 
 static BOOL RXPathDeserializeCloseElement(RXPathDeserializer *self) {
 	BOOL didAdvance = RXPathDeserializerAcceptType(self, RXPathCloseElementType);
-	if(didAdvance && self->closeHandler)
-		self->closeHandler();
+	if(didAdvance)
+		[self->builder closePath];
 	return didAdvance;
 }
 

@@ -26,6 +26,8 @@ typedef void (^RXPathQuadraticCurveBlock)(CGPoint controlPoint, CGPoint endPoint
 typedef void (^RXPathCubicCurveBlock)(CGPoint controlPoint1, CGPoint controlPoint2, CGPoint endPoint);
 typedef void (^RXPathCloseBlock)();
 
+@protocol RXPathBuilder;
+
 @interface RXPathSerializer : NSObject
 
 +(RXPathSerializer *)serializerWithMutableData:(NSMutableData *)data;
@@ -40,14 +42,19 @@ typedef void (^RXPathCloseBlock)();
 
 @interface RXPathDeserializer : NSObject
 
-+(RXPathDeserializer *)deserializerWithData:(NSData *)data;
-
-@property (nonatomic, copy) RXPathMoveBlock moveHandler;
-@property (nonatomic, copy) RXPathLineBlock lineHandler;
-@property (nonatomic, copy) RXPathQuadraticCurveBlock quadraticCurveHandler;
-@property (nonatomic, copy) RXPathCubicCurveBlock cubicCurveHandler;
-@property (nonatomic, copy) RXPathCloseBlock closeHandler;
++(RXPathDeserializer *)deserializerWithData:(NSData *)data pathBuilder:(id<RXPathBuilder>)builder;
 
 -(BOOL)deserializeWithError:(NSError * __autoreleasing *)error;
+
+@end
+
+
+@protocol RXPathBuilder <NSObject>
+
+-(void)moveToPoint:(CGPoint)point;
+-(void)addLineToPoint:(CGPoint)point;
+-(void)addQuadCurveToPoint:(CGPoint)endPoint controlPoint:(CGPoint)controlPoint;
+-(void)addCurveToPoint:(CGPoint)endPoint controlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2;
+-(void)closePath;
 
 @end

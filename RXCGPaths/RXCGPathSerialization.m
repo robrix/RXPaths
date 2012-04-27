@@ -7,7 +7,16 @@
 
 typedef void (*RXCGPathSerializeElementFunction)(RXPathSerializer *serializer, const CGPathElement *element);
 
-@implementation RXCGPathSerialization
+@interface RXCGPathSerialization () <RXPathBuilder>
+@property (nonatomic, readonly) CGPathRef path;
+@end
+
+@implementation RXCGPathSerialization {
+	CGMutablePathRef path;
+}
+
+@synthesize path;
+
 
 #pragma mark Serialization
 
@@ -62,34 +71,47 @@ static void RXCGPathSerializeElement(void *info, const CGPathElement *element) {
 +(CGPathRef)newPathWithData:(NSData *)data error:(NSError * __autoreleasing *)error {
 	NSParameterAssert(data != nil);
 	
-	RXPathDeserializer *deserializer = [RXPathDeserializer deserializerWithData:data];
-	CGMutablePathRef path = CGPathCreateMutable();
+	RXCGPathSerialization *builder = [self new];
+	RXPathDeserializer *deserializer = [RXPathDeserializer deserializerWithData:data pathBuilder:builder];
 	
-	deserializer.moveHandler = ^(CGPoint point) {
-		CGPathMoveToPoint(path, NULL, point.x, point.y);
-	};
-	
-	deserializer.lineHandler = ^(CGPoint point) {
-		CGPathAddLineToPoint(path, NULL, point.x, point.y);
-	};
-	
-	deserializer.quadraticCurveHandler = ^(CGPoint controlPoint, CGPoint endPoint) {
-		CGPathAddQuadCurveToPoint(path, NULL, controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
-	};
-	
-	deserializer.cubicCurveHandler = ^(CGPoint controlPoint1, CGPoint controlPoint2, CGPoint endPoint) {
-		CGPathAddCurveToPoint(path, NULL, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
-	};
-	
-	deserializer.closeHandler = ^{
-		CGPathCloseSubpath(path);
-	};
-	
-	if(![deserializer deserializeWithError:error]) {
-		CGPathRelease(path);
-		path = NULL;
-	}
+	CGPathRef path = [deserializer deserializeWithError:error]?
+		builder.path
+	:	NULL;
+	CFRetain(path);
 	return path;
+}
+
+
+-(id)init {
+	if((self = [super init])) {
+		path = CGPathCreateMutable();
+	}
+	return self;
+}
+
+-(void)dealloc {
+	CGPathRelease(path);
+}
+
+
+-(void)moveToPoint:(CGPoint)point {
+	CGPathMoveToPoint(path, NULL, point.x, point.y);
+}
+
+-(void)addLineToPoint:(CGPoint)point {
+	CGPathAddLineToPoint(path, NULL, point.x, point.y);
+}
+
+-(void)addQuadCurveToPoint:(CGPoint)endPoint controlPoint:(CGPoint)controlPoint {
+	CGPathAddQuadCurveToPoint(path, NULL, controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
+}
+
+-(void)addCurveToPoint:(CGPoint)endPoint controlPoint1:(CGPoint)controlPoint1 controlPoint2:(CGPoint)controlPoint2 {
+	CGPathAddCurveToPoint(path, NULL, controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
+}
+
+-(void)closePath {
+	CGPathCloseSubpath(path);
 }
 
 @end
